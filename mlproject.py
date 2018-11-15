@@ -220,5 +220,3 @@ outframe.to_csv("SG/devSG.out", sep=" ", index=False, header=False)
 #         self.highest_next = -1
 
 #     def set_previous(self, )
-
-
