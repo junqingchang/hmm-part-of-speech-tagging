@@ -1,222 +1,223 @@
-import pandas as pd
 import re
-import numpy as np
+import sys
+import math
 
-####### Data preprocessing ####### 
-filename = "SG/train"
-fin = open(filename)
+parameters = len(sys.argv)
+if len(sys.argv) != 2:
+    print("Invalid input, please enter for example 'python MLProject.py EN'")
+else:
+    running = sys.argv[1]
 
-rawframe=[]
-all_tags = [] # List holding All unique Tags
-all_words = {} # dictionary of all words with tag as key
-k_of_dict={}
+# running = "EN"
 
-#Part 2a
-##Algorithm
-#for loop tweets,tags:
-#add each tag into a dictionary. (key:tags,values:[words])
-for line in fin:
-    if len(line) == 0: continue
-    cols = re.split('\s+(?=\S+$)',line) #Using the last whitespace as separator
-    if len(cols) > 1:
-        tag = cols[1].strip()
-        word = cols[0].strip()
-        if tag not in all_tags:
-            all_tags.append(tag)
-        if tag not in all_words:
-            all_words[tag] = [word]
-            k_of_dict[tag] = 1
+filetrain = "{}/train".format(running)
+filetest = "{}/dev.in".format(running)
+filep2out = "{}/dev.p2.out".format(running)
+filep3out = "{}/dev.p3.out".format(running)
+
+# Train Data Cleaning -----------------------------
+def probability_creation(inputfile):
+    f = open(inputfile,encoding="UTF-8")
+    e_dict = {}
+    t_dict = {}
+    previous_tag = "START"
+    for line in f:
+        if len(line) == 0: continue
+        cols = re.split('\s+(?=\S+$)',line) #Using the last whitespace as separator
+        if len(cols) > 1:
+            tag = cols[1].strip()
+            word = cols[0].strip()
+            if tag not in e_dict:
+                e_dict[tag] = {}
+            if word not in e_dict[tag]:
+                e_dict[tag][word] = 1
+            else:
+                e_dict[tag][word] += 1
+                    
+            if previous_tag not in t_dict:
+                t_dict[previous_tag] = {}
+            if tag not in t_dict[previous_tag]:
+                t_dict[previous_tag][tag] = 1
+            else:
+                t_dict[previous_tag][tag] += 1
+            previous_tag = tag
         else:
-            all_words[tag].append(word)
-    rawframe.append(cols)
+            tag = "STOP"
+            if previous_tag not in t_dict:
+                t_dict[previous_tag] = {}
+            if tag not in t_dict[previous_tag]:
+                t_dict[previous_tag][tag] = 1
+            else:
+                t_dict[previous_tag][tag] += 1
+            previous_tag = "START"
+            
+    t_count = {}
+    for key in t_dict:
+        count = 0
+        for value in t_dict[key]:
+            count+= t_dict[key][value]
+        t_count[key] = count
+    return t_dict, t_count, e_dict
 
-df = pd.DataFrame(rawframe, columns = ["Word", "Tag"])
-df["transit"] = None # Create an extra column for transition start/end for states
-# Printing out the dataframe
-# print(df)
-# print(df.describe())
-
-
-# For Emission 
-def get_emission_probability(x,y): 
-
-    '''
-    Returns float probability of emitting x from y
-    If invalid parameters, return None
-    x: String value which is the emitted word 
-    y: String value which is the given tag
-    '''
-
+# Part 2---------------------------------------------
+# Without Unknown
+def get_emission_probability(x, y, e_dict, t_count):
     try:
-        total_y_words = len(all_words[y])
-        total_tag_to_word = all_words[y].count(x)
+        total_y_words = t_count[y]
+        total_tag_to_word = e_dict[y][x]
         return total_tag_to_word/total_y_words
     except:
-        return None
+        return 0.0
 
-## Test out #MK1
-# print(get_emission_probability("trump","B-positive"))
-
-#Part 2b
-#During the testing phase, if the word does not appear in the training set, we replace that word with the
-#special word token #UNK#
-def test_get_emission_probability(x,y):
-    '''
-    Returns float probability of emitting x from y, accounting in #UNKN#
-    If invalid parameters, return None
-    x: String value which is the emitted word 
-    y: String value which is the given tag
-    '''
-    global k_of_dict
+# With Unknown
+def get_kemission_probability(x, y, e_dict, t_count):
+    global_counter=0
+    for key in e_dict:
+        if x in e_dict[key]:
+            global_counter+=1
     try:
-        total_y_words = len(all_words[y])
-        total_tag_to_word = all_words[y].count(x)
-        if total_tag_to_word == 0:
-            #replace word with #UNK#
-            x="#UNK#"
-            k_of_dict[y]+=1
-            return (k_of_dict[y]/(total_y_words+k_of_dict[y]))
+        total_y_words = t_count[y]
+        if global_counter == 0:
+            calculatedprob = float(1 / (total_y_words + 1))
+            return calculatedprob
         else:
-            return total_tag_to_word/(total_y_words+k_of_dict[y])
+            if x in e_dict[y]:
+                total_tag_to_word = e_dict[y][x]
+            else:
+                total_tag_to_word = 0
+            calculatedprob = float(total_tag_to_word / (total_y_words + 1))
+            return calculatedprob
     except:
-        return None
+        calculatedprob = float(1 / (total_y_words + 1))
+        return 0.0
 
-## Testing out test_get_emission_probability(x,y):
-# print(test_get_emission_probability("kahwee","B-positive"))
-
-# Part 2c
-# argmax word to tag
-def preprocess_word_prediction(in_file):
-    '''
-    Returns a dataframe after processing input file
-    in_file: input text file with 1 column of words 
-    '''
-    inputList=[]
-    inputFile = open(in_file, 'r')
-    for line in inputFile:
-        line = line.strip()
-        if len(line) == 0:continue
-        inputList.append(line)
-    #print(inputList)
-    df = pd.DataFrame(inputList, columns = ["Word"])
-    return df
-
-def tag_creator(x):
-    '''
-    Returns the most probable word, calls test_get_emission_probability inside
-    x: word to predict tag 
-    '''
+def emission_tag_creation(x, e_dict, t_count):
     highest_prob = 0
-    most_probable = ""
-    for key in all_words:
-        if x in all_words[key]:
-            curr_prob = test_get_emission_probability(x, key)
-            if curr_prob > highest_prob:
-                highest_prob = curr_prob
-                most_probable = key
-    return most_probable
+    most_prob = ""
+    for tag in e_dict:
+        prob = get_kemission_probability(x, tag, e_dict, t_count)
+        if prob > highest_prob:
+            highest_prob = prob
+            most_prob = tag
+    return most_prob
 
+def emission_output(inputfile, outputfile, e_dict, t_count):
+    f = open(inputfile,encoding="UTF-8")
+    w = open(outputfile, 'w' ,encoding="UTF-8")
+    for line in f:
+        word = line.strip()
+        if word == "":
+            w.write("\n")
+            continue
+        counter = 0
+        for tag in e_dict:
+            if word in e_dict[tag]:
+                counter += 1
+        if counter == 0:
+            word = '#UNK#'
+        tag = emission_tag_creation(word, e_dict, t_count)
+        w.write("{} {}\n".format(word, tag))
 
-filename = "SG/dev.in"
-filechina="CN/dev.in"
-fileen="EN/dev.in"
-filefr="FR/dev.in"
+# Part 3-------------------------------------------------
+def get_transition_probability(y1, y2, t_dict, t_count):
+    try:
+        count_y1_y2 = t_dict[y1][y2]
+        count_y1 = t_count[y1] # to be replaced by y1
+        probability = count_y1_y2 /count_y1
+        return float(probability)
+    except:
+        return 0.0
 
-# File Generation #TODO Uncomment later
-# outframe = preprocess_word_prediction(filename)
-# outframe['Tag'] = outframe['Word'].apply(tag_creator)
-# outframe.to_csv("SG/devSG.out", sep=" ", index=False, header=False)
-
-
-
-### The below is the transition from state to state
-
-# For Transition
-counter = 0
-def startEndCol(df):
-    """
-    This function label the new column as either start or end based on the position of the "None" tag in the Tag Column.
-    df: This is the dataframe you want to input. Dataframe needs to have columns Word, Tag, transit
-    """
-    dataframeSize = len(df.index)
-    df.loc[0]['transit']= "Start"
-    df.loc[dataframeSize-2]['transit']='End'
-    global counter
-    for rows in df.iterrows():
-        if rows[1][1]==None and counter<dataframeSize-1:
-            df.loc[counter-1]['transit'] = "End"
-            df.loc[counter+1]['transit'] = "Start"
-            counter+=1
-        else: counter+=1
-    return df
-
-
-transitionframe = startEndCol(df)
-
-#print(precision(x,y))
-#print(recall(x,y))
-#print(F_score())
-
-# Print after processing
-# print(transitionframe)
-
-#Part 3
-
-###
-transition_dict = {"Start": [], "End":[]}
-transitionframe = transitionframe.replace('\n','', regex=True)
-previous_Tag = "Starter"
-for index, row in transitionframe.iterrows():
-    current_Tag = row["Tag"]
-    if previous_Tag == "Starter":
-        previous_Tag == current_Tag
-    if row['transit'] == "Start":
-        transition_dict["Start"].append(current_Tag)
-    elif row["transit"]=="End":
-	    transition_dict[current_Tag].append("End")
-    else:
-        if previous_Tag not in transition_dict:
-            transition_dict[previous_Tag] = [current_Tag]
-        else:
-            transition_dict[previous_Tag].append(current_Tag)
-    previous_Tag = current_Tag
-
-# Print after dictionary
-# print(transition_dict)
-
-
-
-# Part 3b
-# Predict Label
-def viterbi(curr_word, prev_tag):
-    unique_set = set(transition_dict[prev_tag])
-    unique_tags = list(unique_set)
-    probability_dict = {}
-    for tag in unique_tags:
-        probability_dict[tag] = transition_dict[prev_tag].count(tag)/len(transition_dict[previous_Tag])
-    for tag in unique_tags:
-        probability_dict[tag] = probability_dict[tag]*test_get_emission_probability(curr_word, tag)
+# Viterbi
+def viterbi(sentence, e_dict, t_dict, t_count):
+    tag_track = []
+    for tag in t_dict:
+        tag_track.append(tag)
+    tag_track.remove("START")
+    prob_table = {}
+    for i in range(len(sentence)+1):
+        # row column downwards, key is {i : probabilties}
+        row = {}
+        for j in range(len(tag_track)):
+            #First word in the sentence
+            if i == 0:
+                ij_transition = get_transition_probability("START",tag_track[j], t_dict,t_count)
+                ij_emission = get_kemission_probability(sentence[i],tag_track[j], e_dict, t_count)
+                ij_value = ij_transition*ij_emission
+                ##Fix for finding probability 
+                if ij_value != 0:
+                    ij_value = -1*math.log(ij_value)
+                row[j] = (ij_value, "START")
+            #End Of the Sentence
+            elif i == len(sentence):
+                ij_prev = prob_table[i-1][j][0] # take the 0th element in the tuple
+                if ij_prev == 0:
+                    row[j] = (0,j)
+                    continue
+                ij_transition = get_transition_probability(tag_track[j], "STOP", t_dict, t_count)
+                ##Fix for finding probability
+                if ij_transition != 0:
+                    ij_value = -1*math.log(ij_transition)*ij_prev
+                else:
+                    ij_value=0
+                row[j] = (ij_value,j)
+            else:
+                largest_value = sys.maxsize
+                largest_index = 0
+                for k in range(len(tag_track)):
+                    kj_prev = prob_table[i-1][k][0]
+                    if kj_prev == 0:
+                        continue
+                    kj_transition = get_transition_probability(tag_track[k],tag_track[j],t_dict,t_count)
+                    kj_emission = get_kemission_probability(sentence[i],tag_track[j],e_dict, t_count)
+                    kj_value = kj_transition * kj_emission
+                    if kj_value != 0:
+                        kj_value = -1*math.log(kj_value)*kj_prev
+                    if kj_value < largest_value and kj_value != 0:
+                        largest_value = kj_value
+                        largest_index = k
+                row[j] = (largest_value,largest_index)
+        prob_table[i] = row
+    sequence = []
+    highest_prob = sys.maxsize
+    previous_tag = 0
+    for i in range(len(tag_track)):
+        compare_prob = prob_table[len(sentence)][i][0]
+        if compare_prob < highest_prob and compare_prob != 0:
+            highest_prob = compare_prob
+            previous_tag = prob_table[len(sentence)][i][1]
+    for i in range(len(prob_table)-1):
+        sequence.append(tag_track[previous_tag])
+        previous_tag = prob_table[len(prob_table)-i-2][previous_tag][1]
+    sequence.reverse()
     
-    highest_probability = 0
-    most_probable = ""
-    for probability_tag in probability_dict:
-        if probability_dict[probability_tag] > highest_probability:
-            highest_probability = probability_dict[probability_tag]
-            most_probable = probability_tag
-    return most_probable
+    return sequence
 
-outframe = preprocess_word_prediction(filename)
-outframe['Tag'] = outframe['Word'].apply()
-outframe.to_csv("SG/devSG.out", sep=" ", index=False, header=False)
+def viterbi_on_input(inputfile, outputfile, e_dict, t_dict, t_count):
+    f = open(inputfile, encoding="UTF-8")
+    w = open(outputfile, 'w' ,encoding="UTF-8")
+    sentence = []
+    for line in f:
+        word = line.strip()
+        if word == "":
+            tags = viterbi(sentence, e_dict, t_dict, t_count)
+            for i in range(len(sentence)):
+                w.write('{} {}\n'.format(sentence[i], tags[i]))
+            w.write("\n")
+            sentence = []
+            continue
+        counter = 0
+        for tag in e_dict:
+            if word in e_dict[tag]:
+                counter += 1
+        if counter == 0:
+            word = '#UNK#'
+        sentence.append(word)
+
+t_dict, t_count, e_dict = probability_creation(filetrain)
+emission_output(filetest, filep2out, e_dict, t_count)
+viterbi_on_input(filetest, filep3out, e_dict, t_dict, t_count)
 
 
 
-# KIV DESIGN CHALLENGE
-# class node(object):
-#     def __init__(self):
-#         self.previous_tag = None
-#         self.highest_previous = -1
-#         self.next_tag = None
-#         self.highest_next = -1
 
-#     def set_previous(self, )
