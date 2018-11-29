@@ -58,7 +58,7 @@ okay I-NP
 i B-NP
 still B-ADVP
 love B-VP
-you I-INTJ
+you B-NP
 
 #UNK# B-CONJP
 #UNK# I-CONJP
@@ -77,8 +77,8 @@ I B-NP
 hope B-VP
 to I-VP
 go I-VP
-to I-VP
-#UNK# I-VP
+to B-PP
+#UNK# I-PP
 myself B-NP
 . O
 
@@ -115,17 +115,17 @@ did B-VP
 n't I-VP
 bring I-VP
 my B-NP
-#UNK# B-PP
+#UNK# B-VP
 today B-NP
 !! O
 lil I-NP
 #UNK# I-NP
 . O
 
-#UNK# B-CONJP
-#UNK# I-CONJP
-#UNK# B-VP
 #UNK# B-PP
+#UNK# I-PP
+#UNK# I-PP
+#UNK# I-PP
 #UNK# I-PP
 #UNK# I-PP
 #UNK# I-PP
@@ -143,10 +143,10 @@ the B-NP
 #UNK# I-ADVP
 #UNK# I-ADVP
 earlier I-ADVP
-in B-ADJP
-#UNK# I-ADJP
+in B-PP
+#UNK# B-NP
 ... O
-#UNK# O
+#UNK# B-INTJ
 
 #UNK# B-INTJ
 .. O
@@ -154,12 +154,12 @@ They B-NP
 #UNK# I-NP
 ! O
 RT O
-#UNK# B-INTJ
+#UNK# O
 y B-ADVP
 every B-NP
 #UNK# B-VP
 tryna I-VP
-#UNK# B-PP
+#UNK# I-VP
 they B-NP
 hair I-NP
 out B-PRT
@@ -169,14 +169,14 @@ of B-PP
 did B-VP
 that B-SBAR
 a B-NP
-long O
-time O
-ago O
-. O
--_- O
-#UNK# O
-ass O
-#UNK# O
+long I-NP
+time I-NP
+ago B-ADVP
+. B-INTJ
+-_- I-INTJ
+#UNK# B-NP
+ass I-NP
+#UNK# I-NP
 . O
 
 @ B-PP
@@ -207,7 +207,7 @@ On B-PP
 after B-PP
 you B-NP
 done B-VP
-#UNK# B-PP
+#UNK# I-VP
 its B-NP
 #UNK# B-SBAR
 #UNK# I-SBAR
@@ -216,7 +216,7 @@ wanna B-VP
 help I-VP
 with B-PP
 the B-NP
-#UNK# I-INTJ
+#UNK# O
 
 Got B-VP
 another B-NP
@@ -274,7 +274,7 @@ These B-NP
 ppl I-NP
 do B-VP
 n't I-VP
-#UNK# B-PP
+#UNK# I-VP
 its B-NP
 Monday I-NP
 and O
@@ -288,11 +288,11 @@ to B-VP
 #UNK# B-PRT
 wit B-PP
 their B-NP
-#UNK# O
+#UNK# I-NP
 !! O
-#UNK# O
-outta O
-here O
+#UNK# B-ADJP
+outta B-PP
+here B-ADVP
 !!! O
 
 The B-NP
@@ -326,24 +326,24 @@ make I-VP
 #UNK# I-VP
 have I-VP
 a B-NP
-#UNK# B-PP
+#UNK# B-VP
 today B-NP
-#UNK# I-INTJ
+#UNK# O
 
 even B-ADVP
 better I-ADVP
 than I-ADVP
-#UNK# I-ADVP
+#UNK# B-SBAR
 friday B-NP
 ! O
 #UNK# B-INTJ
 
 I B-NP
-#UNK# I-NP
-#UNK# B-CONJP
-#UNK# I-CONJP
-#UNK# B-VP
-#UNK# B-ADJP
+#UNK# B-PP
+#UNK# I-PP
+#UNK# I-PP
+#UNK# I-PP
+#UNK# B-NP
 . O
 Come B-VP
 Thursday B-NP
@@ -361,13 +361,13 @@ age B-NP
 . O
 at B-PP
 the B-NP
-#UNK# O
-age O
-of O
-17 O
+#UNK# B-VP
+age B-NP
+of I-NP
+17 I-NP
 !! O
-Im O
-#UNK# O
+Im B-NP
+#UNK# I-NP
 . O
 
 #UNK# B-NP
@@ -386,7 +386,7 @@ have I-VP
 no B-NP
 hot B-ADJP
 water B-NP
-#UNK# I-INTJ
+#UNK# O
 
 #UNK# O
 LOL B-INTJ
@@ -426,11 +426,11 @@ a B-NP
 week I-NP
 on B-PP
 a B-NP
-good I-NP
-#UNK# B-ADVP
+good B-ADJP
+#UNK# I-ADJP
 is B-VP
 always B-ADVP
-nice B-ADJP
+nice B-NP
 . O
 
 #UNK# B-CONJP
@@ -440,15 +440,15 @@ IS B-VP
 THE B-NP
 #UNK# I-NP
 TIME I-NP
-#UNK# B-ADVP
-#UNK# I-ADVP
+#UNK# B-INTJ
+#UNK# I-INTJ
 : O
 
 Pope B-NP
 #UNK# B-SBAR
 #UNK# I-SBAR
 ' B-NP
-#UNK# B-PP
+#UNK# B-VP
 That B-NP
 's B-VP
 why B-ADVP
@@ -496,7 +496,7 @@ when B-ADVP
 i B-NP
 went B-VP
 to I-VP
-#UNK# O
+#UNK# B-PRT
 
 RT O
 #UNK# B-INTJ
@@ -513,18 +513,18 @@ age B-NP
 from B-PP
 #UNK# B-NP
 was B-VP
-#UNK# B-NP
-Steve I-NP
+#UNK# I-VP
+Steve B-NP
 , O
 #UNK# B-ADVP
 was B-VP
 #UNK# B-ADJP
 and I-ADJP
-#UNK# O
-was O
-fat O
+#UNK# I-ADJP
+was B-VP
+fat I-NP
 . O
-#UNK# O
+#UNK# B-INTJ
 
 [ O
 #UNK# B-INTJ
@@ -547,10 +547,10 @@ that B-SBAR
 the B-NP
 #UNK# I-NP
 copy I-NP
-#UNK# B-ADVP
-#UNK# I-ADVP
+#UNK# B-INTJ
+#UNK# I-INTJ
 ... O
-#UNK# O
+#UNK# B-INTJ
 
 Friday B-NP
 Night B-INTJ
@@ -620,7 +620,7 @@ A B-NP
 YEAR I-NP
 !!! O
 And O
-more B-ADJP
+more B-NP
 ... O
 #UNK# B-INTJ
 
@@ -643,8 +643,8 @@ in B-PP
 when B-ADVP
 #UNK# I-ADVP
 #UNK# I-ADVP
-#UNK# B-VP
-out B-PRT
+#UNK# I-ADVP
+out B-ADJP
 ! O
 
 #UNK# B-ADJP
@@ -655,13 +655,13 @@ tonight B-NP
 #UNK# B-INTJ
 #UNK# I-INTJ
 , O
-#UNK# B-SBAR
-#UNK# I-SBAR
-#UNK# B-NP
-, I-NP
-#UNK# B-CONJP
-#UNK# I-CONJP
-#UNK# B-VP
+#UNK# B-INTJ
+#UNK# I-INTJ
+#UNK# I-INTJ
+, O
+#UNK# B-INTJ
+#UNK# I-INTJ
+#UNK# I-INTJ
 . O
 #UNK# B-INTJ
 #UNK# I-INTJ
@@ -669,8 +669,8 @@ tonight B-NP
 RT O
 #UNK# B-INTJ
 : O
-What B-NP
-'s B-VP
+What O
+'s B-NP
 done B-VP
 is B-VP
 done B-VP
@@ -715,24 +715,24 @@ now B-ADVP
 , O
 at B-PP
 #UNK# B-NP
-, O
-and O
-lady O
-next O
-to O
-me O
-#UNK# O
-over O
-to O
-my O
-#UNK# O
+, I-NP
+and I-NP
+lady I-NP
+next I-NP
+to B-PP
+me B-NP
+#UNK# B-VP
+over B-PRT
+to B-PP
+my B-NP
+#UNK# I-NP
 .. O
-Just O
-#UNK# O
+Just B-ADVP
+#UNK# I-ADVP
 . O
-#UNK# O
-. O
-#UNK# O
+#UNK# B-INTJ
+. I-INTJ
+#UNK# I-INTJ
 
 RT O
 #UNK# B-INTJ
@@ -749,7 +749,7 @@ day I-NP
 went B-VP
 on B-PP
 an B-NP
-#UNK# B-ADVP
+#UNK# I-NP
 's B-VP
 New B-NP
 #UNK# B-ADJP
@@ -765,7 +765,7 @@ day B-NP
 goin B-VP
 ? O
 
-#UNK# B-SBAR
+#UNK# O
 I B-NP
 have B-VP
 n't I-VP
@@ -779,7 +779,7 @@ when B-ADVP
 #UNK# I-ADVP
 to B-PP
 the B-NP
-#UNK# B-PP
+#UNK# B-VP
 this B-NP
 year I-NP
 , O
@@ -811,7 +811,7 @@ where B-ADVP
 #UNK# I-ADVP
 is B-VP
 your B-NP
-#UNK# B-PP
+#UNK# B-VP
 tonight B-NP
 ? O
 :) B-INTJ
@@ -824,7 +824,7 @@ Nope B-INTJ
 #UNK# I-PP
 im B-NP
 being B-VP
-#UNK# B-PP
+#UNK# I-VP
 tonight B-NP
 !! O
 #UNK# B-INTJ
@@ -837,8 +837,8 @@ loved B-VP
 the B-NP
 last I-NP
 years I-NP
-#UNK# B-ADJP
-#UNK# I-ADJP
+#UNK# B-INTJ
+#UNK# I-INTJ
 !! O
 #UNK# B-INTJ
 ! O
@@ -850,9 +850,9 @@ too B-ADJP
 
 " O
 #UNK# B-INTJ
-: O
-#UNK# B-ADJP
-#UNK# I-ADJP
+: I-INTJ
+#UNK# I-INTJ
+#UNK# I-INTJ
 actually B-ADVP
 used B-VP
 #UNK# I-VP
@@ -871,7 +871,7 @@ we B-NP
 were B-VP
 drunk B-ADJP
 ... O
-haha O
+haha B-INTJ
 
 RT O
 #UNK# B-SBAR
@@ -894,9 +894,9 @@ get I-VP
 #UNK# B-ADJP
 #UNK# I-ADJP
 ? O
-#UNK# O
-#UNK# O
-#UNK# O
+#UNK# B-INTJ
+#UNK# I-INTJ
+#UNK# I-INTJ
 
 #UNK# O
 Yeah B-INTJ
@@ -906,7 +906,7 @@ a B-NP
 long I-NP
 week I-NP
 here B-ADVP
-too B-ADJP
+too B-NP
 . O
 #UNK# B-ADJP
 for B-PP
@@ -929,8 +929,8 @@ you B-NP
 want B-VP
 to I-VP
 say I-VP
-to I-VP
-#UNK# I-VP
+to B-PP
+#UNK# I-PP
 different B-NP
 people B-NP
 right B-ADVP
@@ -941,11 +941,11 @@ now I-ADVP
 #UNK# B-INTJ
 #UNK# I-INTJ
 : O
-your O
-a O
-#UNK# O
+your B-NP
+a B-NP
+#UNK# I-NP
 ... O
-#UNK# O
+#UNK# B-INTJ
 
 Our B-NP
 Favorite I-NP
@@ -955,9 +955,9 @@ This B-NP
 Week I-NP
 : O
 The B-NP
-#UNK# B-INTJ
-#UNK# I-INTJ
-#UNK# I-INTJ
+#UNK# B-ADJP
+#UNK# I-ADJP
+#UNK# I-ADJP
 
 I B-NP
 just B-ADVP
@@ -980,18 +980,18 @@ and O
 and O
 got B-VP
 : O
-Part O
-6 O
-:) O
+Part B-NP
+6 I-NP
+:) B-INTJ
 ! O
-Try O
-it O
+Try B-VP
+it B-NP
 : O
-#UNK# O
+#UNK# B-INTJ
 
 My B-NP
 first I-NP
-#UNK# B-ADVP
+#UNK# I-NP
 was B-VP
 a B-NP
 #UNK# B-SBAR
@@ -1019,7 +1019,7 @@ still B-ADVP
 i B-NP
 did B-VP
 n't I-VP
-#UNK# B-PP
+#UNK# I-VP
 my B-NP
 book I-NP
 =( B-INTJ
@@ -1031,8 +1031,8 @@ it B-NP
 before B-PP
 Feb B-NP
 ends B-VP
-#UNK# B-INTJ
-:) I-INTJ
+#UNK# B-PRT
+:) B-INTJ
 
 @justinbieber O
 I B-NP
@@ -1043,7 +1043,7 @@ my B-NP
 #UNK# I-NP
 , O
 it B-NP
-#UNK# B-PP
+#UNK# B-VP
 me B-NP
 days I-NP
 , I-NP
@@ -1108,7 +1108,7 @@ RT O
 #UNK# B-NP
 thing I-NP
 I B-NP
-#UNK# B-PP
+#UNK# B-VP
 this B-NP
 week I-NP
 . O
@@ -1126,18 +1126,18 @@ scared B-VP
 #UNK# B-INTJ
 
 Gotta B-VP
-love I-VP
-the B-NP
-#UNK# I-NP
-#UNK# B-CONJP
-of I-CONJP
-#UNK# B-VP
-#UNK# B-ADJP
+love B-NP
+the I-NP
+#UNK# I-PP
+#UNK# I-PP
+of I-PP
+#UNK# I-PP
+#UNK# B-NP
 : O
 " O
-#UNK# B-ADJP
-#UNK# B-SBAR
-if I-SBAR
+#UNK# B-ADVP
+#UNK# I-ADVP
+if B-SBAR
 there B-NP
 is B-VP
 life B-NP
@@ -1148,9 +1148,9 @@ after B-PP
 my B-NP
 truck I-NP
 and O
-'ll O
-find O
-out O
+'ll B-VP
+find I-VP
+out B-PRT
 ." O
 
 RT O
@@ -1172,22 +1172,22 @@ see I-VP
 #UNK# B-PRT
 : O
 My B-NP
-#UNK# B-PRT
+#UNK# I-NP
 at B-PP
 7pm B-NP
 tonight B-NP
-#UNK# I-INTJ
+#UNK# O
 
 #UNK# B-CONJP
 #UNK# I-CONJP
 #UNK# B-VP
-#UNK# B-NP
-#UNK# I-NP
-#UNK# B-CONJP
-#UNK# I-CONJP
-to B-VP
-#UNK# B-SBAR
-#UNK# I-SBAR
+#UNK# B-ADJP
+#UNK# I-ADJP
+#UNK# I-ADJP
+#UNK# I-ADJP
+to B-PP
+#UNK# I-PP
+#UNK# I-PP
 tonight B-NP
 !!!! O
 
@@ -1280,18 +1280,18 @@ to I-VP
 #UNK# B-PRT
 . O
 When B-ADVP
-this O
-stuff O
-happens O
-to O
-me O
-I O
-want O
-to O
-#UNK# O
+this B-NP
+stuff I-NP
+happens B-VP
+to I-VP
+me B-NP
+I B-NP
+want B-VP
+to I-VP
+#UNK# B-PRT
 , O
 " O
-#UNK# O
+#UNK# B-INTJ
 !" O
 
 RT O
@@ -1309,7 +1309,7 @@ FRIDAY B-NP
 ! O
 :) B-INTJ
 
-#UNK# B-SBAR
+#UNK# O
 who B-NP
 tweet B-VP
 to I-VP
@@ -1331,8 +1331,8 @@ you B-NP
 do B-VP
 ! O
 
-#UNK# B-ADJP
-hard I-ADJP
+#UNK# O
+hard B-NP
 work B-VP
 going I-VP
 to B-PP
@@ -1353,13 +1353,13 @@ and I-VP
 of B-PP
 #UNK# B-NP
 . O
-#UNK# O
-up O
-on O
-#UNK# O
-now O
+#UNK# B-VP
+up B-PRT
+on B-PP
+#UNK# B-ADVP
+now I-ADVP
 
-#UNK# B-SBAR
+#UNK# O
 It B-NP
 's B-VP
 the B-NP
@@ -1381,25 +1381,25 @@ State I-NP
 . O
 #UNK# B-ADJP
 bad I-ADJP
-#UNK# O
-here O
-last O
-evening O
+#UNK# I-ADJP
+here B-ADVP
+last B-NP
+evening I-NP
 . O
 
 RT O
 #UNK# B-INTJ
-: O
-#UNK# B-ADJP
-#UNK# I-ADJP
-#UNK# I-ADJP
+: I-INTJ
+#UNK# I-INTJ
+#UNK# I-INTJ
+#UNK# I-INTJ
 : O
 When B-ADVP
 #UNK# I-ADVP
 is B-VP
 More B-NP
-- B-INTJ
-#UNK# I-INTJ
+- O
+#UNK# B-INTJ
 
 No B-NP
 bike I-NP
@@ -1477,7 +1477,7 @@ a O
 #UNK# B-VP
 me B-NP
 a B-NP
-#UNK# B-PRT
+#UNK# I-NP
 for B-PP
 #UNK# B-NP
 . O
@@ -1496,7 +1496,7 @@ I B-NP
 've B-VP
 been I-VP
 having I-VP
-#UNK# B-PP
+#UNK# I-VP
 all B-NP
 week I-NP
 , O
@@ -1511,10 +1511,10 @@ It B-NP
 's B-VP
 starting I-VP
 to I-VP
-#UNK# B-PRT
-#UNK# O
-much O
-the O
-same O
+#UNK# B-ADJP
+#UNK# I-ADJP
+much I-ADJP
+the B-NP
+same I-NP
 . O
 

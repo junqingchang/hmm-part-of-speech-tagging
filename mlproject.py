@@ -157,7 +157,7 @@ def viterbi(sentence, e_dict, t_dict, t_count):
                 ij_transition = get_transition_probability(tag_track[j], "STOP", t_dict, t_count)
                 ##Fix for finding probability
                 if ij_transition != 0:
-                    ij_value = -1*math.log(ij_transition)*ij_prev
+                    ij_value = -1*math.log(ij_transition)+ij_prev
                 else:
                     ij_value=0
                 row[j] = (ij_value,j)
@@ -172,7 +172,7 @@ def viterbi(sentence, e_dict, t_dict, t_count):
                     kj_emission = get_kemission_probability(sentence[i],tag_track[j],e_dict, t_count)
                     kj_value = kj_transition * kj_emission
                     if kj_value != 0:
-                        kj_value = -1*math.log(kj_value)*kj_prev
+                        kj_value = -1*math.log(kj_value)+kj_prev
                     if kj_value < largest_value and kj_value != 0:
                         largest_value = kj_value
                         largest_index = k
