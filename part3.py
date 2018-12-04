@@ -12,7 +12,6 @@ else:
 
 filetrain = "{}/train".format(running)
 filetest = "{}/dev.in".format(running)
-filep2out = "{}/dev.p2.out".format(running)
 filep3out = "{}/dev.p3.out".format(running)
 
 # Train Data Cleaning -----------------------------
@@ -215,7 +214,6 @@ def viterbi_on_input(inputfile, outputfile, e_dict, t_dict, t_count):
         sentence.append(word)
 
 t_dict, t_count, e_dict = probability_creation(filetrain)
-emission_output(filetest, filep2out, e_dict, t_count)
 viterbi_on_input(filetest, filep3out, e_dict, t_dict, t_count)
 
 

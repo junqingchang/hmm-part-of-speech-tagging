@@ -12,8 +12,9 @@ else:
 
 filetrain = "{}/train".format(running)
 filetest = "{}/dev.in".format(running)
-filep4out = "{}/dev.p4.out".format(running)
+filep3out = "{}/dev.p3.out".format(running)
 
+# Train Data Cleaning -----------------------------
 def probability_creation(inputfile):
     f = open(inputfile,encoding="UTF-8")
     e_dict = {}
@@ -56,8 +57,8 @@ def probability_creation(inputfile):
             count+= t_dict[key][value]
         t_count[key] = count
     return t_dict, t_count, e_dict
-        
 
+# Part 2---------------------------------------------
 # Without Unknown
 def get_emission_probability(x, y, e_dict, t_count):
     try:
@@ -66,7 +67,6 @@ def get_emission_probability(x, y, e_dict, t_count):
         return total_tag_to_word/total_y_words
     except:
         return 0.0
-
 
 # With Unknown
 def get_kemission_probability(x, y, e_dict, t_count):
@@ -100,7 +100,6 @@ def emission_tag_creation(x, e_dict, t_count):
             most_prob = tag
     return most_prob
 
-
 def emission_output(inputfile, outputfile, e_dict, t_count):
     f = open(inputfile,encoding="UTF-8")
     w = open(outputfile, 'w' ,encoding="UTF-8")
@@ -118,8 +117,7 @@ def emission_output(inputfile, outputfile, e_dict, t_count):
         tag = emission_tag_creation(word, e_dict, t_count)
         w.write("{} {}\n".format(word, tag))
 
-
-
+# Part 3-------------------------------------------------
 def get_transition_probability(y1, y2, t_dict, t_count):
     try:
         count_y1_y2 = t_dict[y1][y2]
@@ -129,10 +127,8 @@ def get_transition_probability(y1, y2, t_dict, t_count):
     except:
         return 0.0
 
-t_dict, t_count, e_dict = probability_creation(filetrain)
-
-# Viterbi look back twice whenever possible
-def viterbi2(sentence, e_dict, t_dict, t_count):
+# Viterbi
+def viterbi(sentence, e_dict, t_dict, t_count):
     tag_track = []
     for tag in t_dict:
         tag_track.append(tag)
@@ -163,19 +159,7 @@ def viterbi2(sentence, e_dict, t_dict, t_count):
                     ij_value = -1*math.log(ij_transition)+ij_prev
                 else:
                     ij_value=0
-                highest_value = sys.maxsize
-                highest_index = 0
-                for p in range(len(tag_track)):
-                    ij_prev_value = prob_table[i-2][p][0]
-                    if ij_prev_value==0:
-                        continue
-                    ij_value=ij_value*ij_prev_value
-                    if ij_value < highest_value and ij_value!= 0:
-                        highest_value = ij_value
-                        highest_index = p
-                row[j] = (highest_value,j)
-           # NEED TO TAKE NOTE THAT FOR Sentence index = 1, we do not need to look at the second lookback
-           # only look back twice for index >=2
+                row[j] = (ij_value,j)
             else:
                 largest_value = sys.maxsize
                 largest_index = 0
@@ -191,16 +175,6 @@ def viterbi2(sentence, e_dict, t_dict, t_count):
                     if kj_value < largest_value and kj_value != 0:
                         largest_value = kj_value
                         largest_index = k
-                        for p in range(len(tag_track)):
-                            if i < 2:
-                                continue
-                            kj_prev_prev = prob_table[i-2][p][0]
-                            if kj_prev_prev == 0:
-                                continue
-                            kj_value = kj_value + kj_prev_prev
-                            if kj_value < largest_value and kj_value != 0:
-                                largest_value = kj_value
-                                largest_index = p
                 row[j] = (largest_value,largest_index)
         prob_table[i] = row
     sequence = []
@@ -218,15 +192,14 @@ def viterbi2(sentence, e_dict, t_dict, t_count):
     
     return sequence
 
-
-def viterbi_on_input2(inputfile, outputfile, e_dict, t_dict, t_count):
+def viterbi_on_input(inputfile, outputfile, e_dict, t_dict, t_count):
     f = open(inputfile, encoding="UTF-8")
     w = open(outputfile, 'w' ,encoding="UTF-8")
     sentence = []
     for line in f:
         word = line.strip()
         if word == "":
-            tags = viterbi2(sentence, e_dict, t_dict, t_count)
+            tags = viterbi(sentence, e_dict, t_dict, t_count)
             for i in range(len(sentence)):
                 w.write('{} {}\n'.format(sentence[i], tags[i]))
             w.write("\n")
@@ -240,5 +213,9 @@ def viterbi_on_input2(inputfile, outputfile, e_dict, t_dict, t_count):
             word = '#UNK#'
         sentence.append(word)
 
-viterbi_on_input2(filetest, filep4out, e_dict, t_dict, t_count)
+t_dict, t_count, e_dict = probability_creation(filetrain)
+viterbi_on_input(filetest, filep3out, e_dict, t_dict, t_count)
+
+
+
 
