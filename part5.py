@@ -11,8 +11,8 @@ else:
 # running = "EN"
 
 filetrain = "{}/train".format(running)
-filetest = "{}/dev.in".format(running)
-filep5out = "{}/dev.p5.out".format(running)
+filetest = "{}/test.in".format(running)
+filep5out = "{}/test.p5.out".format(running)
 
 class PercepDT():
     def __init__(self, inputfile):
